@@ -3,7 +3,6 @@ package ui;
 import model.Question;
 import model.Quiz;
 import util.Session;
-import util.ScoreStore;
 
 import javax.swing.*;
 import java.awt.FlowLayout;
@@ -55,20 +54,8 @@ public class HomeScreen extends JFrame {
 
         viewScores.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!Session.isLoggedIn()) {
-                    JOptionPane.showMessageDialog(HomeScreen.this, "Please log in to view scores.");
-                    return;
-                }
-                List<String> scores = ScoreStore.getScoresForUser(Session.getCurrentUser().getUsername());
-                if (scores.isEmpty()) {
-                    JOptionPane.showMessageDialog(HomeScreen.this, "No past scores found.");
-                } else {
-                    StringBuilder sb = new StringBuilder();
-                    for (String s : scores) {
-                        sb.append(s).append("\n");
-                    }
-                    JOptionPane.showMessageDialog(HomeScreen.this, sb.toString());
-                }
+                dispose();
+                new PastScoresScreen().setVisible(true);
             }
         });
 
