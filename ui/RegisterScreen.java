@@ -2,9 +2,16 @@ package ui;
 
 import util.UserStore;
 import model.User;
+import util.UIStyle;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RegisterScreen extends JFrame {
     private JTextField usernameField;
@@ -13,37 +20,75 @@ public class RegisterScreen extends JFrame {
     private JLabel message;
 
     public RegisterScreen() {
-        setTitle("Register - Driving Permit Test");
-        setSize(360, 260);
+        UIStyle.apply(this, "Driving Permit — Register");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setSize(520, 380);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(6, 1, 8, 8));
+        setLayout(new BorderLayout(12, 12));
 
-        add(new JLabel("Username:"));
-        usernameField = new JTextField();
-        add(usernameField);
+        JLabel title = UIStyle.heading("Create an account");
+        title.setBorder(BorderFactory.createEmptyBorder(16, 16, 0, 16));
+        add(title, BorderLayout.NORTH);
 
-        add(new JLabel("Password:"));
-        passwordField = new JPasswordField();
-        add(passwordField);
+        JPanel card = UIStyle.card(20);
+        card.setLayout(new GridBagLayout());
+        add(card, BorderLayout.CENTER);
 
-        add(new JLabel("Confirm Password:"));
-        confirmField = new JPasswordField();
-        add(confirmField);
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(8, 8, 8, 8);
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0; c.gridy = 0;
 
-        message = new JLabel("", SwingConstants.CENTER);
-        add(message);
+        JLabel userL = new JLabel("Username");
+        usernameField = new JTextField(22);
 
-        JButton registerBtn = new JButton("Register");
-        registerBtn.addActionListener(e -> register());
-        add(registerBtn);
+        JLabel passL = new JLabel("Password");
+        passwordField = new JPasswordField(22);
+
+        JLabel confL = new JLabel("Confirm Password");
+        confirmField = new JPasswordField(22);
+
+        message = new JLabel("");
+        message.setForeground(new java.awt.Color(180, 0, 0));
+
+        JButton registerBtn = UIStyle.primaryButton("Register");
+
+        card.add(userL, c);
+        c.gridx = 1;
+        card.add(usernameField, c);
+
+        c.gridx = 0; c.gridy++;
+        card.add(passL, c);
+        c.gridx = 1;
+        card.add(passwordField, c);
+
+        c.gridx = 0; c.gridy++;
+        card.add(confL, c);
+        c.gridx = 1;
+        card.add(confirmField, c);
+
+        c.gridx = 0; c.gridy++;
+        c.gridwidth = 2;
+        card.add(message, c);
+
+        c.gridy++;
+        JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        actions.setOpaque(false);
+        actions.add(registerBtn);
+        card.add(actions, c);
+
+        registerBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                register();
+            }
+        });
     }
 
     private void register() {
         String u = usernameField.getText().trim();
         String p = new String(passwordField.getPassword());
         String c = new String(confirmField.getPassword());
-
         if (u.isEmpty() || p.isEmpty() || c.isEmpty()) {
             message.setText("All fields are required.");
             return;
@@ -56,7 +101,6 @@ public class RegisterScreen extends JFrame {
             message.setText("Username already exists.");
             return;
         }
-
         User newUser = new User(u, p);
         UserStore.saveUser(newUser);
         JOptionPane.showMessageDialog(this, "Registration successful. You can log in now.");

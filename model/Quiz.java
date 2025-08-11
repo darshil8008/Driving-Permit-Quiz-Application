@@ -4,45 +4,32 @@ import java.util.List;
 
 public class Quiz {
     private List<Question> questions;
-    private int[] userAnswers; // -1 = unanswered
+    private int[] userAnswers;
 
     public Quiz(List<Question> questions) {
         this.questions = questions;
         this.userAnswers = new int[questions.size()];
-        for (int i = 0; i < userAnswers.length; i++) {
-            userAnswers[i] = -1;
-        }
+        for (int i = 0; i < userAnswers.length; i++) userAnswers[i] = -1;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
-    }
+    public List<Question> getQuestions() { return questions; }
+    public int getQuestionCount() { return questions.size(); }
 
-    public int getQuestionCount() {
-        return questions.size();
-    }
-
-    public void answerQuestion(int index, int selectedOption) {
-        if (index >= 0 && index < userAnswers.length) {
-            userAnswers[index] = selectedOption;
-        }
+    public void answerQuestion(int index, int selected) {
+        if (index >= 0 && index < userAnswers.length) userAnswers[index] = selected;
     }
 
     public int getUserAnswer(int index) {
-        if (index >= 0 && index < userAnswers.length) {
-            return userAnswers[index];
-        }
+        if (index >= 0 && index < userAnswers.length) return userAnswers[index];
         return -1;
     }
 
     public int calculateScore() {
-        int correct = 0;
+        int c = 0;
         for (int i = 0; i < questions.size(); i++) {
-            if (userAnswers[i] == questions.get(i).getCorrectIndex()) {
-                correct++;
-            }
+            if (userAnswers[i] == questions.get(i).getCorrectIndex()) c++;
         }
-        return correct;
+        return c;
     }
 
     public double calculatePercentage() {
@@ -51,8 +38,7 @@ public class Quiz {
     }
 
     public String correctAnswerLabel(int index) {
-        int ci = questions.get(index).getCorrectIndex();
-        return indexToLabel(ci);
+        return indexToLabel(questions.get(index).getCorrectIndex());
     }
 
     public String userAnswerLabel(int index) {

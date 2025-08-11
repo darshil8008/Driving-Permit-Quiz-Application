@@ -1,0 +1,25 @@
+USER:preet
+DATE:Sun Aug 10 22:53:58 CDT 2025
+SCORE:0
+TOTAL:20
+Q1|When must headlights be turned on?|Correct:A|Your:-
+Q2|What does a solid double yellow line mean?|Correct:C|Your:-
+Q3|What is the speed limit in residential areas?|Correct:A|Your:-
+Q4|What does a flashing red traffic signal mean?|Correct:C|Your:-
+Q5|What does a triangular red and white sign at an intersection mean?|Correct:B|Your:-
+Q6|If a school bus is stopped with flashing red lights, you must:|Correct:C|Your:-
+Q7|What should you do if you miss your exit on the highway?|Correct:C|Your:-
+Q8|What does this sign indicate?|Correct:A|Your:-
+Q9|What does this sign indicate?|Correct:A|Your:-
+Q10|What does a red light mean?|Correct:A|Your:-
+Q11|What does this sign indicate?|Correct:A|Your:C
+Q12|What does this sign indicate?|Correct:A|Your:-
+Q13|A broken yellow line between lanes of traffic means:|Correct:B|Your:D
+Q14|Before changing lanes, you should:|Correct:D|Your:-
+Q15|What does a pentagon-shaped sign indicate?|Correct:C|Your:-
+Q16|What should you do when approaching a stop sign?|Correct:D|Your:-
+Q17|How far ahead should you signal before turning?|Correct:D|Your:-
+Q18|What does a yellow traffic light mean?|Correct:C|Your:-
+Q19|When are you allowed to pass another vehicle on the right?|Correct:B|Your:-
+Q20|What does this sign indicate?|Correct:A|Your:-
+

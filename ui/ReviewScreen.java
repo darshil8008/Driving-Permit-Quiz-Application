@@ -13,23 +13,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class QuizScreen extends JFrame {
+public class ReviewScreen extends JFrame {
+    private final Quiz quiz;
     private int index = 0;
-    private Quiz quiz;
-    private ButtonGroup group;
-    private JRadioButton[] options;
+
     private JLabel questionLabel;
     private JLabel counterLabel;
     private JLabel imageLabel;
+
+    private ButtonGroup group;
+    private JRadioButton[] options;
+
     private JButton prevButton;
     private JButton nextButton;
-    private JButton submitButton;
+    private JButton finalizeButton;
 
-    public QuizScreen(Quiz quiz) {
+    public ReviewScreen(Quiz quiz) {
         this.quiz = quiz;
-        UIStyle.apply(this, "Driving Permit — Quiz");
+        UIStyle.apply(this, "Review Answers");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(720, 520);
+        setSize(720, 540);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(12, 12));
 
@@ -53,8 +56,8 @@ public class QuizScreen extends JFrame {
         imageLabel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
         center.add(imageLabel, BorderLayout.NORTH);
 
-        JPanel optionPanel = new JPanel(new GridLayout(4, 1, 10, 10));
-        optionPanel.setOpaque(false);
+        JPanel optPanel = new JPanel(new GridLayout(4, 1, 10, 10));
+        optPanel.setOpaque(false);
         group = new ButtonGroup();
         options = new JRadioButton[4];
         for (int i = 0; i < 4; i++) {
@@ -62,18 +65,18 @@ public class QuizScreen extends JFrame {
             options[i].setFont(UIStyle.body());
             options[i].setOpaque(false);
             group.add(options[i]);
-            optionPanel.add(options[i]);
+            optPanel.add(options[i]);
         }
-        center.add(optionPanel, BorderLayout.CENTER);
+        center.add(optPanel, BorderLayout.CENTER);
 
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         bottom.setOpaque(false);
         prevButton = UIStyle.secondaryButton("Previous");
         nextButton = UIStyle.secondaryButton("Next");
-        submitButton = UIStyle.primaryButton("Review");
+        finalizeButton = UIStyle.primaryButton("Finalize & Submit");
         bottom.add(prevButton);
         bottom.add(nextButton);
-        bottom.add(submitButton);
+        bottom.add(finalizeButton);
         add(bottom, BorderLayout.SOUTH);
 
         prevButton.addActionListener(new ActionListener() {
@@ -96,11 +99,11 @@ public class QuizScreen extends JFrame {
             }
         });
 
-        submitButton.addActionListener(new ActionListener() {
+        finalizeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saveSelection();
                 dispose();
-                new ReviewScreen(quiz).setVisible(true);
+                new ScoreScreen(quiz).setVisible(true);
             }
         });
 
@@ -136,8 +139,8 @@ public class QuizScreen extends JFrame {
         group.clearSelection();
         for (int i = 0; i < 4; i++) options[i].setText(opts[i]);
 
-        int prevSel = quiz.getUserAnswer(index);
-        if (prevSel >= 0 && prevSel < 4) options[prevSel].setSelected(true);
+        int prev = quiz.getUserAnswer(index);
+        if (prev >= 0 && prev < 4) options[prev].setSelected(true);
 
         prevButton.setEnabled(index > 0);
         nextButton.setEnabled(index < quiz.getQuestionCount() - 1);

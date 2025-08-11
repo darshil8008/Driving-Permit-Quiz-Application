@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Random;
 
 public class DatabaseManager {
-
     private static final String DEFAULT_FILE = "questions.txt";
 
     public static List<Question> loadQuestions() {
@@ -21,30 +20,32 @@ public class DatabaseManager {
     public static List<Question> loadQuestionsFromFile(String path) {
         List<Question> all = new ArrayList<Question>();
         BufferedReader br = null;
-
         try {
             br = new BufferedReader(new FileReader(path));
-            String line;
-
+            String first;
             while (true) {
-                line = readNonEmpty(br);
-                if (line == null) break;
-                String questionText = line.trim();
-
+                first = readNonEmpty(br);
+                if (first == null) break;
+                String imagePath = null;
+                String questionText;
+                if (first.startsWith("IMG:")) {
+                    imagePath = first.substring(4).trim();
+                    questionText = readNonEmpty(br);
+                    if (questionText == null) break;
+                } else {
+                    questionText = first.trim();
+                }
                 String[] options = new String[4];
                 for (int i = 0; i < 4; i++) {
                     String opt = br.readLine();
                     if (opt == null) return finalizeToTwenty(all);
                     options[i] = opt.trim();
                 }
-
                 String correctLine = br.readLine();
                 if (correctLine == null) return finalizeToTwenty(all);
                 int correctIndex = Integer.parseInt(correctLine.trim());
                 if (correctIndex < 0 || correctIndex > 3) return finalizeToTwenty(all);
-
-                all.add(new Question(questionText, options, correctIndex));
-
+                all.add(new Question(questionText, options, correctIndex, imagePath));
                 br.readLine();
             }
         } catch (IOException ex) {
@@ -52,7 +53,6 @@ public class DatabaseManager {
         } finally {
             try { if (br != null) br.close(); } catch (IOException ignored) {}
         }
-
         return finalizeToTwenty(all);
     }
 
@@ -67,21 +67,11 @@ public class DatabaseManager {
     private static List<Question> finalizeToTwenty(List<Question> all) {
         List<Question> copy = new ArrayList<Question>(all);
         Collections.shuffle(copy);
-
-        if (copy.size() == 20) {
-            return copy;
-        }
-        if (copy.size() > 20) {
-            return new ArrayList<Question>(copy.subList(0, 20));
-        }
-        if (copy.isEmpty()) {
-            return copy;
-        }
-
+        if (copy.size() == 20) return copy;
+        if (copy.size() > 20) return new ArrayList<Question>(copy.subList(0, 20));
+        if (copy.isEmpty()) return copy;
         Random rnd = new Random();
-        while (copy.size() < 20) {
-            copy.add(all.get(rnd.nextInt(all.size())));
-        }
+        while (copy.size() < 20) copy.add(all.get(rnd.nextInt(all.size())));
         return copy;
     }
 }

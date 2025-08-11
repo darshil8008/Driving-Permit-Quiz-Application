@@ -103,37 +103,44 @@ Two-way traffic
 Yield to oncoming traffic
 1
 
-When driving in fog, you should use:
-High beams
-Low beams
-Hazard lights
-Turn signals only
-1
 
-What is the legal alcohol limit for adult drivers?
-0.02%
-0.05%
-0.08%
-0.10%
-2
-
-What is the hand signal for a left turn?
-Left arm out
-Right arm up
-Left arm down
-Right arm out
+IMG:images/stop.jpeg
+What does this sign indicate?
+Stop
+Yield
+No entry
+Do not pass
 0
 
-What must you do when entering a roundabout?
-Yield to traffic inside
-Speed up to merge
-Always stop
-Turn on hazard lights
+IMG:images/no_u_turn.png
+What does this sign indicate?
+No U-Turn
+No Left Turn
+No Right Turn
+Two-way traffic
 0
 
-What does a red X above a lane mean?
-Proceed
-Turn left
-Lane is closed
-Emergency vehicles only
-2
+IMG:images/one_way.png
+What does this sign indicate?
+One Way
+Merge
+Lane ends
+Divided highway
+0
+
+IMG:images/yield.jpeg
+What does this sign indicate?
+Yield
+Stop
+No passing
+School zone
+0
+
+IMG:images/speed_limit_25.png
+What does this sign indicate?
+Maximum speed 25 mph
+Minimum speed 25 mph
+Speed checked by radar
+Advisory speed 25 mph
+0
+
